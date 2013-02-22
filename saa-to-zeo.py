@@ -1,13 +1,10 @@
-#
-#
+# 	name: SleepAsAndroid to Zeo Export Converter
+#   author: Lucas Charles
+#	id: 22feb2013 - ver2
+#	desc: Takes SleepasAndroid export CSV as argument and exports ZEO-style CSV
 """
     >>>python sleepasandroidtozeo sleep-export.csv
     "export converted to zeostyle-export.csv"
-
-	name: SleepAsAndroid to Zeo Export Converter
-	date: 21feb2013 - ver1
-	desc: Takes SleepasAndroid export CSV as argument and exports ZEO-style CSV
-
 ################
 todo:
 - multiply Hours by 60
@@ -25,7 +22,6 @@ infile = open(SAAINFILE,'r')
 outfile = open("zeostyle-export.csv",'w')
 
 instr = infile.readline()
-recordcount = 0
 outlist = []
 
 while instr:
