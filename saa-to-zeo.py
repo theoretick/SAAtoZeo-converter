@@ -10,14 +10,11 @@
 
 ################
 todo:
-+ delete ID
-+ del TZ
-- del Rating
-- del Comments
-- del Framerate
-- move OLD-col4 (SchedT, 0-inclusive) to index[0]
 - multiply Hours by 60
-- move OLD-col5 (Hours, 0-inc) to index[2]
+- somehow merge time+data for saa
+- re-add extra columns?
+- calculate sleep stages and add
+- wtf is ZQ?
 """
 
 import sys
