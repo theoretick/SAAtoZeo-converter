@@ -38,7 +38,6 @@ def retitle(title):
 		return title
 
 import sys
-from copy import deepcopy
 
 SAAINFILE = sys.argv[1]
 
