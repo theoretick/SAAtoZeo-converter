@@ -26,6 +26,7 @@ def hours2min(hours):
 		return hours
 
 def retitle(title):
+	# change this to dictionary lookup
 	if "From" in title:
 		return 'Start of Night'
 	elif "To" in title:
@@ -46,23 +47,24 @@ def reorder(unordered):
 	order.extend(unordered[9:])
 	return order
 
-def reformat(unformatted):
+def reformat(saaformat):
+	# envokes hours2min(), retitles() columns, and returns string
 	import string
-	formatlist = []
-	formatlist.extend(unformatted)
-	formatlist[3] = hours2min(unformatted[3])
-	for i in range(3):
-		formatlist[i] = retitle(unformatted[i])
-	formatlist[3] = retitle(formatlist[3])
-	return ",".join(formatlist)
 
+	zeoformat = []
+	zeoformat.extend(saaformat)
+	zeoformat[3] = hours2min(saaformat[3])
+	for i in range(3):
+		zeoformat[i] = retitle(saaformat[i])
+	zeoformat[3] = retitle(zeoformat[3])
+	return ",".join(zeoformat)
 
 import sys
 
 SAAINFILE = sys.argv[1]
 
 infile = open(SAAINFILE,'r')
-outfile = open("zeostyle-export.csv",'w')
+outfile = open('zeostyle-export.csv','w')
 
 instr = infile.readline()
 outlist = []
