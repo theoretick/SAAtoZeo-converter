@@ -9,10 +9,13 @@
 todo:
 - multiply Hours by 60
 - somehow merge time+data for saa
-- re-add extra columns?
+- re-add extra columns to end?
 - calculate sleep stages and add
 - wtf is ZQ?
 """
+
+def dateformatter(date):
+	pass
 
 import sys
 
@@ -28,10 +31,11 @@ while instr:
 	orderedlinelist = []
 	linelist = instr.split(",")
 	del linelist[0:2]
-	del linelist[5:7]
+	del linelist[4:7]
 	orderedlinelist.append(linelist.pop(2))
-	print orderedlinelist
 	orderedlinelist.extend(linelist[:])
+ 	if "Hours" not in orderedlinelist[3]:
+ 		orderedlinelist[3] = str(int(round(float(orderedlinelist[3].strip("\""))*60)))
 	newlinestr = ",".join(orderedlinelist)
 	outlist.append(newlinestr)
 	instr = infile.readline()
