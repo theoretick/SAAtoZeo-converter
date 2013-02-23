@@ -2,23 +2,24 @@
 #   author: Lucas Charles
 #	id: 22feb2013 - ver2
 #	desc: Takes SleepasAndroid export CSV as argument and exports ZEO-style CSV
+################################################
+# todo:
+# - init empty zeo data columns
+# - somehow merge 2-row DATA (time+data) for saa
+# - re-add extra columns to end?
+# - calculate sleep stages and add them
+# - wtf is ZQ?
+################################################
 """
     >>>python sleepasandroidtozeo sleep-export.csv
     "export converted to zeostyle-export.csv"
-################
-todo:
-- multiply Hours by 60
-- somehow merge time+data for saa
-- re-add extra columns to end?
-- calculate sleep stages and add
-- wtf is ZQ?
 """
 
 def dateformatter(date):
 	pass
 
 def hours2min(hours):
-	# for now MUST RUN BEFORE RETITLE OR WONT CATCH NEW TITLE
+	# for now MUST RUN BEFORE retitle or wont catch new col title
 	if 'Hours' not in hours:
 		flnum = float(hours.strip("\""))*60
 		return str(int(round(flnum)))
@@ -26,7 +27,7 @@ def hours2min(hours):
 		return hours
 
 def retitle(title):
-	# change this to dictionary lookup
+	# change this to tuple/dictionary lookup
 	if "From" in title:
 		return 'Start of Night'
 	elif "To" in title:
@@ -40,10 +41,9 @@ def retitle(title):
 
 def reorder(unordered):
 	order = []
-	order.append(unordered[4])
-	order.append(unordered[2])
-	order.append(unordered[3])
-	order.append(unordered[5])
+	seq = [4,2,3,5]
+	for x in seq:
+		order.append(unordered[x])
 	order.extend(unordered[9:])
 	return order
 
