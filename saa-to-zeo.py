@@ -17,6 +17,13 @@ todo:
 def dateformatter(date):
 	pass
 
+def hourstominutes(hours):
+	if hours == 'Hours':
+		return 'Total Z'
+	else:
+		flnum = float(hours.strip("\""))*60
+		return str(int(round(flnum)))
+
 import sys
 
 SAAINFILE = sys.argv[1]
@@ -34,8 +41,7 @@ while instr:
 	del linelist[4:7]
 	orderedlinelist.append(linelist.pop(2))
 	orderedlinelist.extend(linelist[:])
- 	if "Hours" not in orderedlinelist[3]:
- 		orderedlinelist[3] = str(int(round(float(orderedlinelist[3].strip("\""))*60)))
+	orderedlinelist[3] = hourstominutes(orderedlinelist[3])
 	newlinestr = ",".join(orderedlinelist)
 	outlist.append(newlinestr)
 	instr = infile.readline()
