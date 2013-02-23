@@ -17,14 +17,28 @@ todo:
 def dateformatter(date):
 	pass
 
-def hourstominutes(hours):
-	if hours == 'Hours':
-		return 'Total Z'
-	else:
+def hours2min(hours):
+	# for now MUST RUN BEFORE RETITLE OR WONT CATCH NEW TITLE
+	if 'Hours' not in hours:
 		flnum = float(hours.strip("\""))*60
 		return str(int(round(flnum)))
+	else:
+		return hours
+
+def retitle(title):
+	if "From" in title:
+		return 'Start of Night'
+	elif "To" in title:
+		return 'End of Night'
+	elif "Hours" == title:
+		return "Total Z"
+	elif "Sched" == title:
+		return "Sleep Date"
+	else:
+		return title
 
 import sys
+from copy import deepcopy
 
 SAAINFILE = sys.argv[1]
 
@@ -35,14 +49,19 @@ instr = infile.readline()
 outlist = []
 
 while instr:
-	orderedlinelist = []
+	orderedline = []
+	formatline = []
 	linelist = instr.split(",")
 	del linelist[0:2]
 	del linelist[4:7]
-	orderedlinelist.append(linelist.pop(2))
-	orderedlinelist.extend(linelist[:])
-	orderedlinelist[3] = hourstominutes(orderedlinelist[3])
-	newlinestr = ",".join(orderedlinelist)
+	orderedline.append(linelist.pop(2))
+	orderedline.extend(linelist[:])
+	formatline.extend(orderedline)
+	formatline[3] = hours2min(orderedline[3])
+	for i in range(3):
+		formatline[i] = retitle(orderedline[i])
+	formatline[3] = retitle(formatline[3])
+	newlinestr = ",".join(formatline)
 	outlist.append(newlinestr)
 	instr = infile.readline()
 
