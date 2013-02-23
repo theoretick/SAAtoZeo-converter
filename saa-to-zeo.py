@@ -62,15 +62,17 @@ def reformat(saaformat):
 import sys
 
 SAAINFILE = sys.argv[1]
+outlist = []
 
 infile = open(SAAINFILE,'r')
 outfile = open('zeostyle-export.csv','w')
-
 instr = infile.readline()
-outlist = []
 
 while instr:
+	# Splits string into reinitialized orderlist, sends to reorder() and
+	# reformat() then appends processed str and reads next line to process
 	orderedline = []
+
 	linelist = instr.split(",")
 	orderedline = reorder(linelist)
 	newlinestr = reformat(orderedline)
