@@ -1,7 +1,9 @@
-# 	name: SleepAsAndroid to Zeo Export Converter
-#   author: Lucas Charles
+################################################
+#	name: SleepAsAndroid to Zeo Export Converter
+#	author: Lucas Charles
 #	id: 22feb2013 - ver2
-#	desc: Takes SleepasAndroid export CSV as argument and exports ZEO-style CSV
+#	desc: Takes SleepasAndroid export CSV as argument
+#	and exports ZEO-style CSV
 ################################################
 # todo:
 # - init empty zeo data columns
@@ -49,7 +51,6 @@ def reorder(unordered):
 
 def reformat(saaformat):
 	# envokes hours2min(), retitles() columns, and returns string
-	import string
 
 	zeoformat = []
 	zeoformat.extend(saaformat)
@@ -59,6 +60,7 @@ def reformat(saaformat):
 	zeoformat[3] = retitle(zeoformat[3])
 	return ",".join(zeoformat)
 
+import string
 import sys
 
 SAAINFILE = sys.argv[1]
