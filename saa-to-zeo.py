@@ -83,6 +83,9 @@ while instr:
 
 outstr = "\n".join(outlist)
 outfile.write(outstr)
+
+print "Done. exported to zeostyle-export.csv"
+
 infile.close()
 outfile.close()
 
