@@ -55,7 +55,7 @@ def reformat(saaformat):
 	zeoformat = []
 	zeoformat.extend(saaformat)
 	zeoformat[3] = hours2min(saaformat[3])
-	for i in range(3):
+	for i in xrange(3):
 		zeoformat[i] = retitle(saaformat[i])
 	zeoformat[3] = retitle(zeoformat[3])
 	return ",".join(zeoformat)
