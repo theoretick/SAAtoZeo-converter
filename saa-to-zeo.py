@@ -65,9 +65,10 @@ import sys
 
 SAAINFILE = sys.argv[1]
 outlist = []
+outname = 'zeostyle-export.csv'
 
 infile = open(SAAINFILE,'r')
-outfile = open('zeostyle-export.csv','w')
+outfile = open(outname,'w')
 instr = infile.readline()
 
 while instr:
@@ -84,7 +85,7 @@ while instr:
 outstr = "\n".join(outlist)
 outfile.write(outstr)
 
-print "Done. exported to zeostyle-export.csv"
+print "Done. exported to %s" % outname
 
 infile.close()
 outfile.close()
