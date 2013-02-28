@@ -68,7 +68,8 @@ def reformat(saaformat):
 	zeoformat.extend(saaformat)
 	zeoformat[2] = hours2min(saaformat[2])
 	for i in xrange(11):
-		zeoformat[i] = retitle(saaformat[i])
+		if i != 2:
+			zeoformat[i] = retitle(saaformat[i])
 	return ",".join(zeoformat)
 
 import string
