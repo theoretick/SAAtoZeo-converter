@@ -18,10 +18,21 @@
 """
 
 def dateformatter(date):
-	pass
+	pass #DONT USE TILL FIXED
+	zdatelist = []
+	datelist = date.split()
+	for i, element in enumerate(datelist):
+		datelist[i](element.strip('.'))
+	zdatelist = datelist.pop([1])
+	if len(datelist[2]) < 5:
+		datelist[2] = '0'+datelist[2]
+	zdatelist.extend = datelist[:]
+	zyearstr = '\/'.join(zdatelist[0:3])
+	zdatestr = zyearstr + str(zdatelist[3])
+	return zdatestr
 
 def hours2min(hours):
-	# for now MUST RUN BEFORE retitle or wont catch new col title
+	# for now MUST run before retitle or wont catch new col title
 	if 'Hours' not in hours:
 		flnum = float(hours.strip("\""))*60
 		return str(int(round(flnum)))
@@ -43,21 +54,22 @@ def retitle(title):
 
 def reorder(unordered):
 	order = []
-	seq = [4,2,3,5]
+	seq = [4,5,2,3]
 	for x in seq:
 		order.append(unordered[x])
 	order.extend(unordered[9:])
+	order.insert(1,"ZQ")
 	return order
 
 def reformat(saaformat):
-	# envokes hours2min(), retitles() columns, and returns string
-
+	# envokes hours2min(), retitles() columns, 
+	# and returns string
 	zeoformat = []
 	zeoformat.extend(saaformat)
-	zeoformat[3] = hours2min(saaformat[3])
-	for i in xrange(3):
+	zeoformat[2] = hours2min(saaformat[2])
+	for i in xrange(11):
 		zeoformat[i] = retitle(saaformat[i])
-	zeoformat[3] = retitle(zeoformat[3])
+	#zeoformat.extend(['Rise Time','Alarm Reason','Snooze Time', 'Wake Tone','Wake Window','Alarm Type'])
 	return ",".join(zeoformat)
 
 import string
@@ -72,10 +84,9 @@ outfile = open(outname,'w')
 instr = infile.readline()
 
 while instr:
-	# Splits string into reinitialized orderlist, sends to reorder() and
+	# Splits string into orderlist, sends to reorder() and
 	# reformat() then appends processed str and reads next line to process
 	orderedline = []
-
 	linelist = instr.split(",")
 	orderedline = reorder(linelist)
 	newlinestr = reformat(orderedline)
