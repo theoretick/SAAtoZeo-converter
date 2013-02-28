@@ -69,7 +69,6 @@ def reformat(saaformat):
 	zeoformat[2] = hours2min(saaformat[2])
 	for i in xrange(11):
 		zeoformat[i] = retitle(saaformat[i])
-	#zeoformat.extend(['Rise Time','Alarm Reason','Snooze Time', 'Wake Tone','Wake Window','Alarm Type'])
 	return ",".join(zeoformat)
 
 import string
