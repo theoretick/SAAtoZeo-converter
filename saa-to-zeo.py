@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: UTF-8 -*-
 ################################################
 #	name: SleepAsAndroid to Zeo Export Converter
 #	author: Lucas Charles
@@ -33,6 +35,7 @@ def dateformatter(date):
 
 def hours2min(hours):
 	# for now MUST run before retitle or wont catch new col title
+	# scans hour column, if not title-str, change to minutes
 	if 'Hours' not in hours:
 		flnum = float(hours.strip("\""))*60
 		return str(int(round(flnum)))
@@ -68,7 +71,7 @@ def reformat(saaformat):
 	zeoformat.extend(saaformat)
 	zeoformat[2] = hours2min(saaformat[2])
 	for i in xrange(11):
-		if i != 2:
+		if i != 2:	#so hours2min doesn't get overwritten for now
 			zeoformat[i] = retitle(saaformat[i])
 	return ",".join(zeoformat)
 
