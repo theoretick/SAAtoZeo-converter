@@ -3,50 +3,38 @@
 ################################################
 #	name: SleepAsAndroid to Zeo Export Converter
 #	author: Lucas Charles
-#	id: 22feb2013 - ver2
+#	id: 4mar2013 - ver2.5
 #	desc: Takes SleepasAndroid export CSV as argument
 #	and exports ZEO-style CSV
 ################################################
 # todo:
 # - init empty zeo data columns
-# - somehow merge 2-row DATA (time+data) for saa
-# - re-add extra columns to end?
+# - call dateformat.py SOMEWHERE
+# - somehow merge 2-row DATA for saa
 # - calculate sleep stages and add them
 # - wtf is ZQ?
+# possibletodo:
+# - re-add extra columns to end?
 ################################################
 """
     >>>python sleepasandroidtozeo sleep-export.csv
     "export converted to zeostyle-export.csv"
 """
 
-def dateformatter(date):
-	pass #DONT USE TILL FIXED
-	zdatelist = []
-	datelist = date.split()
-	for i, element in enumerate(datelist):
-		datelist[i](element.strip('.'))
-	zdatelist = datelist.pop([1])
-	if len(datelist[2]) < 5:
-		datelist[2] = '0'+datelist[2]
-	zdatelist.extend = datelist[:]
-	zyearstr = '\/'.join(zdatelist[0:3])
-	zdatestr = zyearstr + str(zdatelist[3])
-	return zdatestr
-
 def hours2min(hours):
 	# for now MUST run before retitle or wont catch new col title
-	# scans hour column, if not title-str, change to minutes
-	if 'Hours' not in hours:
-		flnum = float(hours.strip("\""))*60
-		return str(int(round(flnum)))
+	# scans column, if not 'hours', convert to minutes
+	if 'Hours' != hours:
+		fnum = float(hours.strip("\""))*60
+		return str(int(round(fnum)))
 	else:
 		return hours
 
 def retitle(title):
 	# change this to tuple/dictionary lookup
-	if "From" in title:
+	if "From" == title:
 		return 'Start of Night'
-	elif "To" in title:
+	elif "To" == title:
 		return 'End of Night'
 	elif "Hours" == title:
 		return "Total Z"
