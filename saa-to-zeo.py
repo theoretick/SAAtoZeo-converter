@@ -24,7 +24,7 @@
 def hours2min(hours):
 	# for now MUST run before retitle or wont catch new col title
 	# scans column, if not 'hours', convert to minutes
-	if 'Hours' != hours:
+	if 'Total Z' != hours:
 		fnum = float(hours.strip("\""))*60
 		return str(int(round(fnum)))
 	else:
@@ -44,23 +44,22 @@ def retitle(title):
 		return title
 
 def reorder(unordered):
+	# reorders columns to zeo format, adds new ones
 	order = []
-	seq = [4,5,2,3]
-	for x in seq:
+	for x in [4,5,2,3]:
 		order.append(unordered[x])
 	order.extend(unordered[9:])
 	order.insert(1,"ZQ")
 	return order
 
 def reformat(saaformat):
-	# envokes hours2min(), retitles() columns, 
+	# retitles() columns, calls hours2min(),
 	# and returns string
 	zeoformat = []
 	zeoformat.extend(saaformat)
-	zeoformat[2] = hours2min(saaformat[2])
 	for i in xrange(11):
-		if i != 2:	#so hours2min doesn't get overwritten for now
-			zeoformat[i] = retitle(saaformat[i])
+		zeoformat[i] = retitle(saaformat[i])
+	zeoformat[2] = hours2min(zeoformat[2])
 	return ",".join(zeoformat)
 
 import string
@@ -75,8 +74,8 @@ outfile = open(outname,'w')
 instr = infile.readline()
 
 while instr:
-	# Splits string into orderlist, sends to reorder() and
-	# reformat() then appends processed str and reads next line to process
+	# Splits string into orderlist, sends to reorder() & reformat(),
+	# appends processed str, and reads next line to process
 	orderedline = []
 	linelist = instr.split(",")
 	orderedline = reorder(linelist)
