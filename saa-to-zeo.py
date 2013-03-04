@@ -45,12 +45,14 @@ def retitle(title):
 
 def reorder(unordered):
 	# reorders columns to zeo format, adds new ones
-	order = []
-	for x in [4,5,2,3]:
-		order.append(unordered[x])
-	order.extend(unordered[9:])
-	order.insert(1,"ZQ")
-	return order
+	neworder = []
+	movecol = [4,5,2,3]
+	newcol = []
+	for x in movecol:
+		neworder.append(unordered[x])
+	neworder.extend(unordered[9:])
+	neworder.insert(1,"ZQ")
+	return neworder
 
 def reformat(saaformat):
 	# retitles() columns, calls hours2min(),
