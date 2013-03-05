@@ -33,14 +33,17 @@ def hours2min(hours):
 def reorder(unordered):
 	# reorders columns to zeo format, adds new ones
 	# movecol = where to move existing
-	# newcol = where to add new
+	# newcol = new cols and where to add
 	neworder = []
 	movecol = [4,5,2,3]
-	newcol = []
+	newcol = {'ZQ':1,'Time to Z':2}
 	for x in movecol:
 		neworder.append(unordered[x])
+	# add rest of data cols
 	neworder.extend(unordered[9:])
-	neworder.insert(1,"ZQ")
+	# add new cols
+	for x in newcol.keys():
+		neworder.insert(newcol.get(x),x)
 	return neworder
 
 def reformat(saaformat):
