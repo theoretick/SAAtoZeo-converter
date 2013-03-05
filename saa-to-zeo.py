@@ -30,21 +30,10 @@ def hours2min(hours):
 	else:
 		return hours
 
-def retitle(title):
-	# change this to tuple/dictionary lookup
-	if "From" == title:
-		return 'Start of Night'
-	elif "To" == title:
-		return 'End of Night'
-	elif "Hours" == title:
-		return "Total Z"
-	elif "Sched" == title:
-		return "Sleep Date"
-	else:
-		return title
-
 def reorder(unordered):
 	# reorders columns to zeo format, adds new ones
+	# movecol = where to move existing
+	# newcol = where to add new
 	neworder = []
 	movecol = [4,5,2,3]
 	newcol = []
@@ -55,12 +44,16 @@ def reorder(unordered):
 	return neworder
 
 def reformat(saaformat):
-	# retitles() columns, calls hours2min(),
+	# retitles columns, calls hours2min(),
 	# and returns string
+	title = {'Hours':'Total Z','Sched':'Sleep Date','From':'Start of Night','To':'End of Night'}
 	zeoformat = []
 	zeoformat.extend(saaformat)
-	for i in xrange(11):
-		zeoformat[i] = retitle(saaformat[i])
+
+	for index, val in enumerate(zeoformat):
+		if val in title.keys():
+			zeoformat[index] = title.get(val)
+
 	zeoformat[2] = hours2min(zeoformat[2])
 	return ",".join(zeoformat)
 
