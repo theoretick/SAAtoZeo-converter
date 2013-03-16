@@ -1,17 +1,17 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-################################################
+#-----------------------------------------------
 #   name: SleepAsAndroid to Zeo Export Converter
 #   author: Lucas Charles
-#   id: 16mar2013 - ver3
+#   id: 16mar2013 - ver3.1
 #   desc: Takes SleepasAndroid export CSV as argument
 #   and exports ZEO-style CSV
-################################################
+#-----------------------------------------------
 # todo:
 # - call dateformat.py SOMEWHERE
 # - calculate sleep stages and add them
 # - wtf is ZQ?
-################################################
+#-----------------------------------------------
 """
     >>>python saa-to-zeo sleep-export.csv
     "export converted to zeostyle-export.csv"
@@ -21,6 +21,7 @@ def reorder(unordered, parity):
     # - reorders cols
     # - converts saadata to zeodata
     # - adds new cols
+    #---------------
     # movecol => where to move existing cols
     # insertcol => columns to insert and where
     # zerocol => columns that init with zero values (rest: null)
@@ -63,8 +64,7 @@ def reorder(unordered, parity):
     return neworder
 
 def reformat(saaformat, parity):
-    # retitles columns, calls hours2min(),
-    # and returns string
+    # retitles cols, calls hours2min(), & returns str
     title = {'Hours':'Total Z','Sched':'Sleep Date','From':'Start of Night','To':'End of Night'}
     zeoformat = []
     zeoformat.extend(saaformat)
@@ -81,15 +81,14 @@ def hours2min(hours):
     return str(int(round(fnum)))
 
 def dataconvert(saadata):
-    """
-      takes saadata and converts to zeostyle graph
-    """
+    # takes saadata and converts to zeostyle graph
     import copy
 
     zeodata = copy.deepcopy(saadata)
     datastr = " ".join(zeodata)
     return datastr
 
+#-----------------------------------------------
 
 import string
 import sys
@@ -100,14 +99,14 @@ outlist = []
 outname = 'zeostyle-export.csv'
 oddcounter = 0
 
-##########
 infile = open(SAAINFILE)
 outfile = open(outname,'w')
 instr = infile.readline()
 
 while instr:
-    # Splits string into list, send to reorder() & reformat(),
-    # appends processed str, and reads next line to process
+    # Splits str into list, send to reorder(), reformat(),
+    # appends processed str, & reads next line to process
+    # only keeps header row and all even rows
     oddcounter += 1
 
     if  (oddcounter % 2 == 0) or (oddcounter == 1):
