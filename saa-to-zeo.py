@@ -81,24 +81,23 @@ def hours2min(hours):
     return str(int(round(fnum)))
 
 def dataconvert(saadata):
-    # takes saadata and converts to zeostyle graph
+    # takes saadata and converts to zeostyle graph data.
+    # Converts list strs to floats, then divides data into 1/5ths
+    # for 5 sleep stages and zeo compatibility.
+    charlist = []
 
-    saastr = " ".join(saadata)
-    tlist = []
-
+    # this awful loop removes excess quotation marks
     for x in saadata:
         for y in x:
             if y!='\"':
-                tlist.append(y)
-        tlist.append(" ")
+                charlist.append(y)
+        charlist.append(" ")
 
-    print tlist[0], type(tlist[0])
-    tstr = "".join(tlist)
-    print tstr
-    tmplist = tstr.split()
+    saastr = "".join(charlist)
+    strlist = saastr.split()
 
 #    numlist = map(float, saastr.split())
-    numlist = [float(x) for x in tmplist]
+    numlist = [float(x) for x in strlist]
     zeodata = []
 
     maxval = max(numlist)
