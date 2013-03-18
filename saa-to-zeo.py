@@ -22,7 +22,7 @@ def reorder(unordered, parity):
     # - converts saadata to zeodata
     # - adds new cols
     #---------------
-    # movecol => where to move existing cols
+    # movecol -> where to move existing cols
     # insertcol => columns to insert and where
     # zerocol => columns that init with zero values (rest: null)
     neworder = []
@@ -82,9 +82,41 @@ def hours2min(hours):
 
 def dataconvert(saadata):
     # takes saadata and converts to zeostyle graph
-    import copy
 
-    zeodata = copy.deepcopy(saadata)
+    saastr = " ".join(saadata)
+    tlist = []
+
+    for x in saadata:
+        for y in x:
+            if y!='\"':
+                tlist.append(y)
+        tlist.append(" ")
+
+    print tlist[0], type(tlist[0])
+    tstr = "".join(tlist)
+    print tstr
+    tmplist = tstr.split()
+
+#    numlist = map(float, saastr.split())
+    numlist = [float(x) for x in tmplist]
+    zeodata = []
+
+    maxval = max(numlist)
+    minval = min(numlist)
+    valrange = maxval - minval
+
+    for i, val in enumerate(numlist):
+        if val/valrange >= 0.8:
+            zeodata.append('4')
+        elif val/valrange >= 0.6:
+            zeodata.append('3')
+        elif val/valrange >= 0.4:
+            zeodata.append('2')
+        elif val/valrange >= 0.2:
+            zeodata.append('1')
+        else:
+            zeodata.append('0')
+
     datastr = " ".join(zeodata)
     return datastr
 
