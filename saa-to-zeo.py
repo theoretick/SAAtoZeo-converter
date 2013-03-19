@@ -48,12 +48,6 @@ def reorder(unordered, parity):
         neworder.extend(['0' for i in zerocol])
         neworder.extend(['' for i in newcol])
         neworder.append(dataconvert(unordered[9:]))
-        
-    """
-        ########## TESTING PRINT STATEMENTS ##########
-        print "max: ",parity,max(unordered[9:])
-        print "min: ",parity,min(unordered[9:])
-    """
 
     # Inserts new columns and inits blanks after header
     for x in insertcol.keys():
@@ -86,17 +80,15 @@ def dataconvert(saadata):
     # for 5 sleep stages and zeo compatibility.
     charlist = []
 
-    # this awful loop removes excess quotation marks
+    # Remove excess quotation marks, chr-by-chr, re-add spaces
     for x in saadata:
-        for y in x:
-            if y!='\"':
-                charlist.append(y)
+        [charlist.append(y) for y in x if y !='\"']
         charlist.append(" ")
 
+    #join all chrs, then split at spaces
     saastr = "".join(charlist)
     strlist = saastr.split()
 
-#    numlist = map(float, saastr.split())
     numlist = [float(x) for x in strlist]
     zeodata = []
 
