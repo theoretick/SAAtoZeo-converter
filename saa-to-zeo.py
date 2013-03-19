@@ -37,15 +37,16 @@ def reorder(unordered, parity):
         'SS Sleepiness', 'SS Exercise', 'SS Time Before Bed', 'SS Conversations', 'SS Activity Level',
         'SS Late Work', 'SSCF 1', 'SSCF 2', 'SSCF 3', 'SSCF 4', 'SSCF 5', 'SSCF 6', 'SSCF 7', 'SSCF 8',
         'SSCF 9', 'SSCF 10', 'SSCF 11', 'SSCF 12', 'SSCF 13', 'SSCF 14', 'SSCF 15', 'SSCF 16', 'SSCF 17',
-        'SSCF 18', 'SSCF 19', 'SSCF 20', 'SSCF 21','Sleep Graph', 'Detailed Sleep Graph']
-    for x in movecol:
-        neworder.append(unordered[x])
-
+        'SSCF 18', 'SSCF 19', 'SSCF 20', 'SSCF 21','Sleep Graph']
+    graphcol = ['Detailed Sleep Graph']
+    
+    neworder.extend([unordered[x] for x in movecol])
     if parity == 1:
-        neworder.extend(zerocol + newcol)
+        neworder.extend(zerocol + newcol + graphcol)
     else:
         neworder.extend(['0' for i in zerocol])
         neworder.extend(['' for i in newcol])
+        # dataconvert() => convert and append returned data 
         neworder.append(dataconvert(unordered[9:]))
 
     # Inserts new columns and inits blanks after header
@@ -82,9 +83,10 @@ def dataconvert(saadata):
     # Converts list strs to floats, then divides data into 1/5ths
     # for 5 sleep stages and zeo compatibility.
     charlist = []
+    zeodata = []
 
-    # Remove excess quotation marks, chr-by-chr, re-add spaces
-    # Must use char method, not strip(), because of "\n"
+    # Remove excess quotation marks chr-by-chr & re-add spaces.
+    # Must use char method, not strip(), because of EOL "\n"
     for x in saadata:
         [charlist.append(y) for y in x if y !='\"']
         charlist.append(" ")
@@ -94,8 +96,6 @@ def dataconvert(saadata):
     strlist = saastr.split()
 
     numlist = [float(x) for x in strlist]
-    zeodata = []
-
     maxval = max(numlist)
     minval = min(numlist)
     valrange = maxval - minval
