@@ -18,7 +18,7 @@
     
 def reorder(unordered, parity):
     # - reorders cols
-    # - converts saadata to zeodata
+    # - calls dataconvert() to convert saadata to zeodata
     # - adds new cols
     #---------------
     # movecol -> where to move existing cols
@@ -57,7 +57,8 @@ def reorder(unordered, parity):
     return neworder
 
 def reformat(saaformat, parity):
-    # retitles cols, calls hours2min(), & returns str
+    # retitles cols from dict, calls hours2min(),
+    # calls dateformat(), & returns str
     title = {'Hours':'Total Z','Sched':'Sleep Date','From':'Start of Night','To':'End of Night'}
     zeoformat = []
     zeoformat.extend(saaformat)
@@ -67,6 +68,9 @@ def reformat(saaformat, parity):
             zeoformat[index] = title.get(val)
     if parity > 1:
         zeoformat[2] = hours2min(zeoformat[2])
+        for line in [0,4,5]:
+            zeoformat[line] = dateformat(zeoformat[line])
+
     return ",".join(zeoformat)
 
 def hours2min(hours):
@@ -80,6 +84,7 @@ def dataconvert(saadata):
     charlist = []
 
     # Remove excess quotation marks, chr-by-chr, re-add spaces
+    # Must use char method, not strip(), because of "\n"
     for x in saadata:
         [charlist.append(y) for y in x if y !='\"']
         charlist.append(" ")
@@ -110,6 +115,24 @@ def dataconvert(saadata):
     datastr = " ".join(zeodata)
     return datastr
 
+def dateformat(instr):
+    """
+      Takes saa-style instr, returns zeo-style
+    """
+    zeolist = []
+    cleanlist = []
+    cleanstr = instr.strip("\"")
+    saalist = cleanstr.split()
+
+    zeolist.append(saalist.pop(1))
+    zeolist.extend(saalist[:])
+    [cleanlist.append(x.strip(".")) for x in zeolist]
+    
+    date = "/".join(cleanlist[0:3])
+    time = cleanlist[3].zfill(5)
+    zeostr = " ".join([date,time])
+
+    return zeostr
 
 #-----------------------------------------------
 
