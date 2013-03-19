@@ -8,7 +8,6 @@
 #   and exports ZEO-style CSV
 #-----------------------------------------------
 # todo:
-# - call dateformat.py SOMEWHERE
 # - wtf is ZQ?
 #-----------------------------------------------
 """
@@ -22,11 +21,11 @@ def reorder(unordered, parity):
     # - adds new cols
     #---------------
     # movecol -> where to move existing cols
-    # insertcol => columns to insert and where
+    # insertcol => columns to insert and where (crazy order due to updating list)
     # zerocol => columns that init with zero values (rest: null)
     neworder = []
     movecol = [4,5,2,3]
-    insertcol = {'ZQ':1,'Time to Z':2}
+    insertcol = {'ZQ':1,'Time to Z':2,'Time in Wake':3,'Time in REM':2, 'Time in Light':3,'Time in Deep':4,'Awakenings':3}
     zerocol = ['Rise Time', 'Alarm Reason', 'Snooze Time', 'Wake Tone', 'Wake Window', 'Alarm Type']
     newcol = [
         'First Alarm Ring', 'Last Alarm Ring', 'First Snooze Time', 'Last Snooze Time', 'Set Alarm Time',
@@ -41,17 +40,18 @@ def reorder(unordered, parity):
     graphcol = ['Detailed Sleep Graph']
     
     neworder.extend([unordered[x] for x in movecol])
+
     if parity == 1:
         neworder.extend(zerocol + newcol + graphcol)
     else:
         neworder.extend(['0' for i in zerocol])
         neworder.extend(['' for i in newcol])
-        # dataconvert() => convert and append returned data 
+        # dataconvert() => convert and append new data 
         neworder.append(dataconvert(unordered[9:]))
 
     # Inserts new columns and inits blanks after header
     for x in insertcol.keys():
-        if parity % 2 == 1:
+        if parity == 1:
             neworder.insert(insertcol.get(x),x)
         else:
             neworder.insert(insertcol.get(x),'')
@@ -69,7 +69,7 @@ def reformat(saaformat, parity):
             zeoformat[index] = title.get(val)
     if parity > 1:
         zeoformat[2] = hours2min(zeoformat[2])
-        for line in [0,4,5]:
+        for line in [0,9,10]:
             zeoformat[line] = dateformat(zeoformat[line])
 
     return ",".join(zeoformat)
