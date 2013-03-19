@@ -3,13 +3,12 @@
 #-----------------------------------------------
 #   name: SleepAsAndroid to Zeo Export Converter
 #   author: Lucas Charles
-#   id: 16mar2013 - ver3.1
-#   desc: Takes SleepasAndroid export CSV as argument
+#   id: 18mar2013 - ver4.0
+#   desc: Takes SleepasAndroid export CSV as arg
 #   and exports ZEO-style CSV
 #-----------------------------------------------
 # todo:
 # - call dateformat.py SOMEWHERE
-# - calculate sleep stages and add them
 # - wtf is ZQ?
 #-----------------------------------------------
 """
@@ -111,6 +110,7 @@ def dataconvert(saadata):
     datastr = " ".join(zeodata)
     return datastr
 
+
 #-----------------------------------------------
 
 import string
@@ -128,8 +128,8 @@ instr = infile.readline()
 
 while instr:
     # Splits str into list, send to reorder(), reformat(),
-    # appends processed str, & reads next line to process
-    # only keeps header row and all even rows
+    # appends processed str to outlist, & reads next line.
+    # only keeps header and all even rows
     oddcounter += 1
 
     if  (oddcounter % 2 == 0) or (oddcounter == 1):
